@@ -145,7 +145,6 @@ Write-Host "$($voiceRoutingPolicy)" -ForegroundColor Green
 
 
 #Check if the number is already assigned to another user
-
 $filterString = 'LineURI -like "{0}"' -f $lineURI
 $getLineUri = Get-CsOnlineUser -Filter $filterString | Select-Object DisplayName,UserPrincipalName
 
