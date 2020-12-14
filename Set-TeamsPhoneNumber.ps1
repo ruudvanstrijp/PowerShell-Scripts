@@ -134,7 +134,7 @@ if($lineURI -notlike "tel:*"){
         }
     }
 }
- 
+
 Write-Host "  Updating user: " -ForegroundColor White -NoNewLine
 Write-Host "$($upn)" -ForegroundColor Green -NoNewLine
 Write-Host " with " -ForegroundColor White -NoNewLine
@@ -142,6 +142,22 @@ Write-Host "$($lineURI)" -ForegroundColor Green -NoNewline
 Write-Host " and Voice Policy " -ForegroundColor White -NoNewLine
 Write-Host "$($voiceRoutingPolicy)" -ForegroundColor Green
  
+#Check if the number is already assigned to another user
+#Get-CsOnlineUser -Filter {LineURI -like "tel:+31103123962"}
+
+$filterString = 'LineURI -like "{0}"' -f $lineURI
+$getLineUri = Get-CsOnlineUser -Filter $filterString | Select-Object DisplayName,LineURI,UserPrincipalName
+
+if($getLineUri){
+    Write-Host "  ERROR: Number already assigned to user: " -ForegroundColor Red -NoNewLine
+    Write-Host "$($getLineUri.DisplayName)" -ForegroundColor Green -NoNewline
+    Write-Host " with UPN " -ForegroundColor Red -NoNewLine
+    Write-Host "$($getLineUri.UserPrincipalName)" -ForegroundColor Green
+    exit
+}
+
+
+
 #Enable user and assign phone number
 if($debug -like $true){
     Write-Host "  DEBUG: Attempting to set Teams settings: Enabling Telephony Features and Configure Phone Number" -ForegroundColor DarkGray
