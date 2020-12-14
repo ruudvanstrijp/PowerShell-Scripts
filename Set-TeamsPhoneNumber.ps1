@@ -141,12 +141,12 @@ Write-Host " with " -ForegroundColor White -NoNewLine
 Write-Host "$($lineURI)" -ForegroundColor Green -NoNewline
 Write-Host " and Voice Policy " -ForegroundColor White -NoNewLine
 Write-Host "$($voiceRoutingPolicy)" -ForegroundColor Green
- 
+
+
 #Check if the number is already assigned to another user
-#Get-CsOnlineUser -Filter {LineURI -like "tel:+31103123962"}
 
 $filterString = 'LineURI -like "{0}"' -f $lineURI
-$getLineUri = Get-CsOnlineUser -Filter $filterString | Select-Object DisplayName,LineURI,UserPrincipalName
+$getLineUri = Get-CsOnlineUser -Filter $filterString | Select-Object DisplayName,UserPrincipalName
 
 if($getLineUri){
     Write-Host "  ERROR: Number already assigned to user: " -ForegroundColor Red -NoNewLine
@@ -155,8 +155,6 @@ if($getLineUri){
     Write-Host "$($getLineUri.UserPrincipalName)" -ForegroundColor Green
     exit
 }
-
-
 
 #Enable user and assign phone number
 if($debug -like $true){
