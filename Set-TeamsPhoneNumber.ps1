@@ -9,7 +9,7 @@ Install-Module MicrosoftTeams -AllowClobber
 
 #Usage
 .\Set-TeamsPhoneNumber.ps1 -upn <upn> -lineURI <lineURI> -voiceRoutingPolicy <voiceRoutingPolicy> (all optional)
-If upn and lineURI are left empty, it will be requested
+If upn and lineURI are left empty, they will be requested
 If voiceRoutingPolicy is left empty, all existing policies will be queried and a selection can be made
 If upn does not contain an @, the script assumes the user's Display Name is entered and it will try to look up the corresponding upn
 
