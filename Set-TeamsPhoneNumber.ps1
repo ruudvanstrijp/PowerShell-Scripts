@@ -18,6 +18,10 @@ If upn does not contain an @, the script assumes the user's Display Name is ente
 .\Set-TeamsPhoneNumber -upn firstname.lastname@domain.com -lineURI +31123456789
 .\Set-TeamsPhoneNumber -upn firstname.lastname@domain.com -lineURI +31123456789 -voiceRoutingPolicy Unrestricted
 .\Set-TeamsPhoneNumber -upn "fistname lastname" -lineURI +31123456789 -voiceRoutingPolicy Unrestricted
+
+#remove all sessions
+#Get-PsSession |?{$s.State.value__ -ne 2 -or $_.Availability -ne 1}|Remove-PSSession -Verbose
+
 #>
 
 Param (
@@ -69,8 +73,7 @@ if($pssession.count -eq 0){
     }
 }
 
-#remove all sessions
-#Get-PsSession |?{$s.State.value__ -ne 2 -or $_.Availability -ne 1}|Remove-PSSession -Verbose
+
 $voiceRoutingPolicies = Get-CsOnlineVoiceRoutingPolicy  | ForEach-Object {($_.Identity -replace "Tag:")}
 if($voiceRoutingPolicy -eq $null -or $voiceRoutingPolicy -eq ""){
     Write-Host "================ Please select the Voice Routing Policy ================"
@@ -98,8 +101,6 @@ elseif($voiceRoutingPolicy -notin $voiceRoutingPolicies){
     Write-Host "Specified Voice Routing Policy does not exist" -ForegroundColor red
     exit
 }
-
-
 
 
 if($debug -like $true){
