@@ -19,9 +19,8 @@ If upn does not contain an @, the script assumes the user's Display Name is ente
 .\Set-TeamsPhoneNumber -upn firstname.lastname@domain.com -lineURI +31123456789 -voiceRoutingPolicy Unrestricted
 .\Set-TeamsPhoneNumber -upn "fistname lastname" -lineURI +31123456789 -voiceRoutingPolicy Unrestricted
 
-#remove all sessions
-#Get-PsSession |?{$s.State.value__ -ne 2 -or $_.Availability -ne 1}|Remove-PSSession -Verbose
-
+#Debug: Remove all sessions
+Get-PsSession |?{$s.State.value__ -ne 2 -or $_.Availability -ne 1}|Remove-PSSession -Verbose
 #>
 
 Param (
