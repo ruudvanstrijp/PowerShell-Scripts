@@ -44,15 +44,15 @@ Set-CsOnlinePSTNUsage -Identity global -Usage @{Add="NL-Internationaal"} -Warnin
 
 
 Write-Host "Adding PSTN usages to voice routing policies"
-Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Rotterdam-Nationaal" -OnlinePstnUsages @{Add="NL-Service"} | Out-Null
-Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Rotterdam-Nationaal" -OnlinePstnUsages @{Add="NL-Nationaal"} | Out-Null
-Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Rotterdam-Nationaal" -OnlinePstnUsages @{Add="NL-Mobiel"} | Out-Null
+Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Nationaal" -OnlinePstnUsages @{Add="NL-Service"} | Out-Null
+Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Nationaal" -OnlinePstnUsages @{Add="NL-Nationaal"} | Out-Null
+Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Nationaal" -OnlinePstnUsages @{Add="NL-Mobiel"} | Out-Null
 
-Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Rotterdam-Internationaal" -OnlinePstnUsages @{Add="NL-Service"} | Out-Null
-Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Rotterdam-Internationaal" -OnlinePstnUsages @{Add="NL-Nationaal"} | Out-Null
-Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Rotterdam-Internationaal" -OnlinePstnUsages @{Add="NL-Mobiel"} | Out-Null
-Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Rotterdam-Internationaal" -OnlinePstnUsages @{Add="NL-Premium"} | Out-Null
-Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Rotterdam-Internationaal" -OnlinePstnUsages @{Add="NL-Internationaal"} | Out-Null
+Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Internationaal" -OnlinePstnUsages @{Add="NL-Service"} | Out-Null
+Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Internationaal" -OnlinePstnUsages @{Add="NL-Nationaal"} | Out-Null
+Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Internationaal" -OnlinePstnUsages @{Add="NL-Mobiel"} | Out-Null
+Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Internationaal" -OnlinePstnUsages @{Add="NL-Premium"} | Out-Null
+Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Internationaal" -OnlinePstnUsages @{Add="NL-Internationaal"} | Out-Null
 
 
 # Check for existence of PSTN gateways and prompt to add PSTN usages/routes
