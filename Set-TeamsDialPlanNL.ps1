@@ -55,7 +55,7 @@ Set-CsOnlineVoiceRoutingPolicy -Identity "NL-Internationaal" -OnlinePstnUsages @
 # Check for existence of PSTN gateways and prompt to add PSTN usages/routes
 
 $PSTNGW = Get-CsOnlinePSTNGateway
-If (($PSTNGW.Identity -eq $NULL) -and ($PSTNGW.Count -eq 0)) {
+If (($PSTNGW.Identity -eq $null) -and ($PSTNGW.Count -eq 0)) {
     Write-Host
     Write-Host 'No PSTN gateway found. If you want to configure Direct Routing, you have to define at least one PSTN gateway Using the New-CsOnlinePSTNGateway command.' -ForegroundColor Yellow
     Exit

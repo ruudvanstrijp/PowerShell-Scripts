@@ -1,3 +1,8 @@
+<#
+#Debug: Remove all sessions
+Get-PsSession |?{$s.State.value__ -ne 2 -or $_.Availability -ne 1}|Remove-PSSession -Verbose
+#>
+
 $debug = $false
 
 Import-module MicrosoftTeams
