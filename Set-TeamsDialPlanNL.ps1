@@ -3,18 +3,15 @@ Based on UCDialPlans.com
 https://www.ucdialplans.com
 
 Stripped and modified by Ruud van Strijp - Axians
+
+#Usage
+This script assumes a SFB Online connection is already made. This can be made using my script Connect-TeamsSkypeOnline.ps1
+
 #>
 
 # $ErrorActionPreference can be set to SilentlyContinue, Continue, Stop, or Inquire for troubleshooting purposes
 $Error.Clear()
 $ErrorActionPreference = 'SilentlyContinue'
-
-If ((Get-PSSession | Where-Object -FilterScript {$_.ComputerName -like '*.online.lync.com'}).State -eq 'Opened') {
-	Write-Host 'Using existing session credentials'}
-Else {
-	$O365Session = New-CsOnlineSession
-	Import-PSSession $O365Session -AllowClobber
-}
 
 $DPParent = "Global"
 
