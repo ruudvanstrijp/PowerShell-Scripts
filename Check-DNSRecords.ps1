@@ -141,6 +141,7 @@ if($service -eq 'SkypeOnline' -or $service -eq 'All'){
 if($service -eq 'Jabber' -or $service -eq 'All'){
     Get-Record -type 'SRV' -hostname '_collab-edge._tls' -function 'Collab Edge SRV'
     Get-Record -type 'SRV' -hostname '_cisco-uds._tcp' -function 'Cisco-UDS SRV'
+    Get-Record -type 'A' -hostname 'collab-edge' -function 'Collab Edge A'
 }
 if($service -eq 'Video' -or $service -eq 'All'){
     Get-Record -type 'SRV' -hostname '_sip._tcp' -function 'SIP TCP SRV'
