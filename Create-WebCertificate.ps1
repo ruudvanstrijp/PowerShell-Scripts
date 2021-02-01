@@ -34,7 +34,7 @@ if ($choice -gt 0 -and $choice -le $certlistfiltered.count) {
 #select sourcefile
 Add-Type -AssemblyName System.Windows.Forms
 $FileBrowserSource = New-Object System.Windows.Forms.OpenFileDialog -Property @{
-    Multiselect = $false # Multiple files can be chosen
+    #Multiselect = $false # Multiple files can be chosen
     InitialDirectory = [Environment]::GetFolderPath('Desktop')
 }
     
@@ -53,7 +53,7 @@ Write-host "Selected source file: " $sourcefile
 #select destination file
 Add-Type -AssemblyName System.Windows.Forms
 $FileBrowserDestination = New-Object System.Windows.Forms.SaveFileDialog -Property @{
-    Multiselect = $false # Multiple files can be chosen
+    #Multiselect = $false # Multiple files can be chosen
 }
 [void]$FileBrowserDestination.ShowDialog()
 
@@ -67,6 +67,8 @@ If(-Not $destinationfile) {
 
 Write-host "Selected destination file: " $destinationfile
 
-Write-Host "Certreq command: certreq -attrib "CertificateTemplate:"$selectedcert -submit $sourcefile $destinationfile"
+$command = "certreq -attrib CertificateTemplate:$selectedcert -submit '" + $sourcefile + "' '" + $destinationfile + "'"
 
-Invoke-Expression -Command "certreq -attrib CertificateTemplate:$selectedcert -submit $sourcefile $destinationfile"
+Write-Host "Certreq command: $($command)"
+
+Invoke-Expression -Command $command
