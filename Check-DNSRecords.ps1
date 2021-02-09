@@ -126,10 +126,12 @@ function Get-SRVRecord{
 
 if($service -eq 'Skype' -or $service -eq 'All'){
     Get-Record -type 'A' -hostname 'sip' -function 'SIP A / CNAME'
+    Get-Record -type 'A' -hostname 'sipexternal' -function 'SIP External A / CNAME'
+    Get-Record -type 'A' -hostname 'sipinternal' -function 'SIP Internal A / CNAME'
     Get-Record -type 'A' -hostname 'lyncdiscover' -function 'Lyncdiscover A / CNAME'
+    Get-Record -type 'A' -hostname 'lyncdiscoverinternal' -function 'Lyncdiscover internal A / CNAME'
     Get-Record -type 'SRV' -hostname '_sipfederationtls._tcp' -function 'Federation SRV'
     Get-Record -type 'SRV' -hostname '_sip._tls' -function 'SIP TLS SRV'
-    Get-Record -type 'A' -hostname 'lyncdiscoverinternal' -function 'Lyncdiscover internal A / CNAME'
     Get-Record -type 'SRV' -hostname '_sipinternaltls._tcp' -function 'SIP Internal TLS SRV'
 }
 if($service -eq 'SkypeOnline' -or $service -eq 'All'){
