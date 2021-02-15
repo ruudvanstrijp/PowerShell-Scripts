@@ -101,7 +101,7 @@ Else { # There is only one PSTN gateway
 
 Write-Host "Creating voice routes"
 New-CsOnlineVoiceRoute -Name "NL-Mobiel" -Priority 2 -OnlinePstnUsages "NL-Mobiel" -OnlinePstnGatewayList $PSTNGWList.Identity -NumberPattern '^\+31(6\d{8})$' | Out-Null
-New-CsOnlineVoiceRoute -Name "NL-Gratis" -Priority 3 -OnlinePstnUsages "NL-Lokaal" -OnlinePstnGatewayList $PSTNGWList.Identity -NumberPattern '^\+31800\d{4,7}$' | Out-Null
+New-CsOnlineVoiceRoute -Name "NL-Gratis" -Priority 3 -OnlinePstnUsages "NL-Nationaal" -OnlinePstnGatewayList $PSTNGWList.Identity -NumberPattern '^\+31800\d{4,7}$' | Out-Null
 New-CsOnlineVoiceRoute -Name "NL-Premium" -Priority 4 -OnlinePstnUsages "NL-Premium" -OnlinePstnGatewayList $PSTNGWList.Identity -NumberPattern '^\+3190\d{5,8}|8[47]\d{7}$' | Out-Null
 New-CsOnlineVoiceRoute -Name "NL-Nationaal" -Priority 5 -OnlinePstnUsages "NL-Nationaal" -OnlinePstnGatewayList $PSTNGWList.Identity -NumberPattern '^\+310?([1-57]\d{4,8}|8[58]\d{7})' | Out-Null
 New-CsOnlineVoiceRoute -Name "NL-Internationaal" -Priority 7 -OnlinePstnUsages "NL-Internationaal" -OnlinePstnGatewayList $PSTNGWList.Identity -NumberPattern '^\+((1[2-9]\d\d[2-9]\d{6})|((?!(31))([2-9]\d{6,14})))' | Out-Null
