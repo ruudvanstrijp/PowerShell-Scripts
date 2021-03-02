@@ -18,7 +18,7 @@ If upn does not contain an @, the script will exit
 #>
 
 Param (
-[Parameter (Mandatory = $true)][string]$upn,
+[Parameter (Mandatory = $false)][string]$upn,
 [Parameter (Mandatory = $true)][string]$PhoneNumber
 )
  
@@ -65,6 +65,29 @@ if($pssession.count -eq 0){
     }
 }
 
+$resourceAccounts = Get-CsOnlineApplicationInstance
+if($upn -eq $null -or $upn -eq ""){
+    Write-Host "================ Please select the Resource Account ================"
+
+    $i=0
+    foreach ($resourceAccount in $resourceAccounts) {
+        $i++
+        Write-Host "$i : Press $i for" $resourceAccount.DisplayName
+    }
+
+    $choice = Read-Host "Make a choice"
+
+    if ($choice -gt 0 -and $choice -le $resourceAccounts.count) {
+            $upn = $resourceAccounts[$choice-1].UserPrincipalName
+            #Write-Host "  Chosen Voice Routing Policy is: " -ForegroundColor White -NoNewline
+            #Write-Host "$($voiceRoutingPolicy)" -ForegroundColor Green
+        }
+    else {
+        Write-Host "Invalid selection" -ForegroundColor red
+        exit
+    }
+}
+
 
 if($debug -like $true){
     Write-Host "  DEBUG: Processing line: $($upn) " -ForegroundColor DarkGray
@@ -87,7 +110,7 @@ if($PhoneNumber -notlike "+*"){
 Write-Host "  Updating Online Application Instance: " -ForegroundColor White -NoNewLine
 Write-Host "$($upn)" -ForegroundColor Green -NoNewLine
 Write-Host " with " -ForegroundColor White -NoNewLine
-Write-Host "$($PhoneNumber)" -ForegroundColor Green -NoNewline
+Write-Host "$($PhoneNumber)" -ForegroundColor Green
 
 
 #Check if the number is already assigned to another resource account
