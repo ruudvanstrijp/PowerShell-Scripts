@@ -10,13 +10,11 @@ Install-Module MicrosoftTeams -AllowClobber
 #Usage
 .\Set-TeamsResourceNumber.ps1 -upn <upn> -PhoneNumber <lineURI> (all optional)
 If upn and lineURI are left empty, they will be requested
-If voiceRoutingPolicy is left empty, all existing policies will be queried and a selection can be made
-If upn does not contain an @, the script assumes the user's Display Name is entered and it will try to look up the corresponding upn
+If upn does not contain an @, the script will exit
 
 #Examples
 .\Set-TeamsResourceNumber
 .\Set-TeamsResourceNumber -upn firstname.lastname@domain.com -PhoneNumber +31123456789
-.\Set-TeamsResourceNumber -upn "fistname lastname" -PhoneNumber +31123456789
 #>
 
 Param (
