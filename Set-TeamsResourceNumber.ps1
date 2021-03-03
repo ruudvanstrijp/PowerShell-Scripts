@@ -79,8 +79,6 @@ if($upn -eq $null -or $upn -eq ""){
 
     if ($choice -gt 0 -and $choice -le $resourceAccounts.count) {
             $upn = $resourceAccounts[$choice-1].UserPrincipalName
-            #Write-Host "  Chosen Voice Routing Policy is: " -ForegroundColor White -NoNewline
-            #Write-Host "$($voiceRoutingPolicy)" -ForegroundColor Green
         }
     else {
         Write-Host "Invalid selection" -ForegroundColor red
