@@ -1,20 +1,20 @@
-    <#
-    
-    .DESCRIPTION
-    Function that can be used to remove files older than a specified age
+<#
 
-    .PARAMETER Path
-    Specifies the target Path.
-    
-    .PARAMETER Age
-    Specifies the target Age in days, e.g. Last write time of the item.
-       
-    .EXAMPLE
-    .\Remove-OldFiles.ps1 -path d:\CDR -maxFileAge 841
-    
-    .NOTES
+.DESCRIPTION
+Function that can be used to remove files older than a specified age
 
-    #>
+.PARAMETER Path
+Specifies the target Path.
+
+.PARAMETER Age
+Specifies the target Age in days, e.g. Last write time of the item.
+    
+.EXAMPLE
+.\Remove-OldFiles.ps1 -path d:\CDR -maxFileAge 841
+
+.NOTES
+
+#>
 
 [CmdletBinding()]
 Param(
