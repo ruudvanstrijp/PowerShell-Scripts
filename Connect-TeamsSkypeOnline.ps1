@@ -1,4 +1,14 @@
 <#
+
+.NOTES
+Only needed until Teams Module v1.1.6. After version 2, connecting is easier and SFB Online modules don't need to be loaded separately.
+
+Upgrade to the latest module:
+Uninstall-Module -Name MicrosoftTeams -AllVersions
+Install-Module -Name MicrosoftTeams -Force -Scope AllUsers
+
+
+.NOTES
 #Debug: Remove all sessions
 Get-PsSession |?{$s.State.value__ -ne 2 -or $_.Availability -ne 1}|Remove-PSSession -Verbose
 #>
