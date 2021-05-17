@@ -1,24 +1,28 @@
 <#
+.SYNOPSIS
 PowerShell script to assign Direct Route phone numbers and Voice Policies to users
 By Ruud van Strijp - Axians
 ruud.vanstrijp@axians.com
 
-#Requirements
-Microsoft Teams module needs to be installed into PowerShell
-Install-Module MicrosoftTeams -AllowClobber
+.NOTES
+Microsoft Teams module 2.3.1 or higher needs to be installed into PowerShell
+Uninstall-Module -Name MicrosoftTeams -AllVersions
+Install-Module -Name MicrosoftTeams -Force -Scope AllUsers
+If you have an older version, use my Connect-TeamsSkypeOnline.ps1 script to connect to Teams first
 
-#Usage
+.EXAMPLE
 .\Set-TeamsPhoneNumber.ps1 -upn <upn> -lineURI <lineURI> -voiceRoutingPolicy <voiceRoutingPolicy> (all optional)
 If upn and lineURI are left empty, they will be requested
 If voiceRoutingPolicy is left empty, all existing policies will be queried and a selection can be made
 If upn does not contain an @, the script assumes the user's Display Name is entered and it will try to look up the corresponding upn
 
-#Examples
+.EXAMPLE
 .\Set-TeamsPhoneNumber
 .\Set-TeamsPhoneNumber -upn firstname.lastname@domain.com -lineURI +31123456789
 .\Set-TeamsPhoneNumber -upn firstname.lastname@domain.com -lineURI +31123456789 -voiceRoutingPolicy Unrestricted
 .\Set-TeamsPhoneNumber -upn "fistname lastname" -lineURI +31123456789 -voiceRoutingPolicy Unrestricted
 
+.NOTES
 #Debug: Remove all sessions
 Get-PsSession |?{$s.State.value__ -ne 2 -or $_.Availability -ne 1}|Remove-PSSession -Verbose
 #>
@@ -29,48 +33,22 @@ Param (
 [Parameter (Mandatory = $false)][string]$voiceRoutingPolicy
 )
  
-$debug = $false
+$debug = $true
  
 import-module MicrosoftTeams
- 
+
 if($debug -like $true){
     Write-Host "  DEBUG: Trying to connect to existing session..." -ForegroundColor DarkGray
 }
 $pssession = Get-PSSession -name SfbPowerShell* | Where-Object {$_.Availability -eq 1}
 if($pssession.count -eq 0){
-    if($debug -like $true){
-        Write-Host "  DEBUG: Connecting to Skype Online..." -ForegroundColor DarkGray
-    }
-    try{
-        $sfboSession = New-CsOnlineSession
-    }
-    Catch{
-        $errOutput = [PSCustomObject]@{
-            status = "failed"
-            error = $_.Exception.Message
-            step = "Connecting to Skype Online"
-            cmdlet = "New-CsOnlineSession"
-        }
-        Write-Output ( $errOutput | ConvertTo-Json)
-        exit
-    }
-    if($debug -like $true){
-        Write-Host "  DEBUG: Importing PS Session..." -ForegroundColor DarkGray
-    }
-    try{
-        Import-PSSession $sfboSession -AllowClobber
-    }
-    Catch{
-        $errOutput = [PSCustomObject]@{
-            status = "failed"
-            error = $_.Exception.Message
-            step = "Importing PS Session"
-            cmdlet = "Import-PSSession"
-        }
-        Write-Output ( $errOutput | ConvertTo-Json)
-        exit
-    }
+    Write-Host "  DEBUG: Could not connect to existing session, starting new session" -ForegroundColor DarkGray
+    Connect-MicrosoftTeams
 }
+
+$csTenant = Get-CsTenant | Select DisplayName
+Write-Host "  Connected to tenant: " -ForegroundColor White -NoNewLine
+Write-Host "$($csTenant.DisplayName)" -ForegroundColor Green
 
 
 $voiceRoutingPolicies = Get-CsOnlineVoiceRoutingPolicy  | ForEach-Object {($_.Identity -replace "Tag:")}
@@ -147,7 +125,7 @@ Write-Host "$($voiceRoutingPolicy)" -ForegroundColor Green
 $filterString = 'LineURI -like "{0}"' -f $lineURI
 $getLineUri = Get-CsOnlineUser -Filter $filterString | Select-Object DisplayName,UserPrincipalName
 
-if($getLineUri -and $getLineUri.UserPrincipalName -ne $upn){
+if($getLineUri){
     Write-Host "  ERROR: Number already assigned to user: " -ForegroundColor Red -NoNewLine
     Write-Host "$($getLineUri.DisplayName)" -ForegroundColor Green -NoNewline
     Write-Host " with UPN " -ForegroundColor Red -NoNewLine
@@ -160,7 +138,7 @@ if($debug -like $true){
     Write-Host "  DEBUG: Attempting to set Teams settings: Enabling Telephony Features and Configure Phone Number" -ForegroundColor DarkGray
 }
 try{
-    Set-CsUser -Identity $UPN -EnterpriseVoiceEnabled $true -HostedVoiceMail $true -OnPremLineURI $lineURI
+    Set-CsUser -Identity $upn -EnterpriseVoiceEnabled $true -HostedVoiceMail $true -OnPremLineURI $lineURI
 }
 Catch{
     $errOutput = [PSCustomObject]@{
