@@ -125,7 +125,7 @@ Write-Host "$($voiceRoutingPolicy)" -ForegroundColor Green
 $filterString = 'LineURI -like "{0}"' -f $lineURI
 $getLineUri = Get-CsOnlineUser -Filter $filterString | Select-Object DisplayName,UserPrincipalName
 
-if($getLineUri){
+if($getLineUri -and $getLineUri.UserPrincipalName -ne $upn){
     Write-Host "  ERROR: Number already assigned to user: " -ForegroundColor Red -NoNewLine
     Write-Host "$($getLineUri.DisplayName)" -ForegroundColor Green -NoNewline
     Write-Host " with UPN " -ForegroundColor Red -NoNewLine
