@@ -193,6 +193,6 @@ Catch{
 }
 
 Write-Host "Result:" -ForegroundColor white
-Get-CsOnlineUser $upn | Select-Object DisplayName,LineURI,OnlineVoiceRoutingPolicy,EnterpriseVoiceEnabled,HostedVoiceMail
+Get-CsOnlineUser $upn | Select-Object DisplayName,LineURI,OnlineVoiceRoutingPolicy,EnterpriseVoiceEnabled,HostedVoiceMail,teamsupgrade*
 Write-Host "Warning: Voice Routing Policy might take some time to update" -ForegroundColor yellow
 #Remove-PSSession $sfboSession
