@@ -95,3 +95,9 @@ else{
 
 Write-Host "  Connected to tenant: " -ForegroundColor White -NoNewLine
 Write-Host (Get-CsTenant).DisplayName -ForegroundColor Green
+
+$tenantIdentity = (Get-CsTenant).Identity -replace ".*lync","" -replace "001.*",""
+$adminURL = "https://admin$($tenantIdentity).online.lync.com/HostedMigration/hostedmigrationService.svc"
+
+Write-Host "  Admin URL: " -ForegroundColor White -NoNewLine
+Write-Host $adminURL -ForegroundColor Green
