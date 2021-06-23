@@ -46,9 +46,8 @@ if($pssession.count -eq 0){
     Connect-MicrosoftTeams
 }
 
-$csTenant = Get-CsTenant | Select DisplayName
 Write-Host "  Connected to tenant: " -ForegroundColor White -NoNewLine
-Write-Host "$($csTenant.DisplayName)" -ForegroundColor Green
+Write-Host (Get-CsTenant).DisplayName -ForegroundColor Green
 
 
 $voiceRoutingPolicies = Get-CsOnlineVoiceRoutingPolicy  | ForEach-Object {($_.Identity -replace "Tag:")}
